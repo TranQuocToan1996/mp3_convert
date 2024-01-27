@@ -3,14 +3,12 @@ from flask import Flask, request
 from flask_mysqldb import MySQL
 
 server = Flask(__name__)
+server.config["MYSQL_HOST"] = os.environ.get("MYSQL_HOST", "localhost")
+server.config["MYSQL_USER"] = os.environ.get("MYSQL_USER", "root")
+server.config["MYSQL_PASSWORD"] = os.environ.get("MYSQL_PASSWORD", "password")
+server.config["MYSQL_DB"] = os.environ.get("MYSQL_DB", "auth")
+server.config["MYSQL_PORT"] = int(os.environ.get("MYSQL_PORT", "3306"))
 mysql = MySQL(server)
-
-server.config["MYSQL_HOST"] = os.environ.get("MYSQL_HOST")
-server.config["MYSQL_USER"] = os.environ.get("MYSQL_USER")
-server.config["MYSQL_PASSWORD"] = os.environ.get("MYSQL_PASSWORD")
-server.config["MYSQL_DB"] = os.environ.get("MYSQL_DB")
-server.config["MYSQL_PORT"] = int(os.environ.get("MYSQL_PORT"))
-
 
 @server.route("/validate", methods=["POST"])
 def validate():
