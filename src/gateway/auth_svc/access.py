@@ -10,5 +10,5 @@ def login(request):
         auth=basicAuth
     )
     if response.status_code != 200:
-        return None, (response.txt, response.status_code)
-    return response.txt, None
+        return None, (response.text, response.status_code)
+    return response.text, None
