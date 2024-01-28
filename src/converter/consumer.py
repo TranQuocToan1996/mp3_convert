@@ -16,7 +16,7 @@ def main():
         if err:
             # negative acknowledge, so that the message remain in the queueu, another consumer will process it
             ch.basic_nack(delivery_tag=method.delivery_tag) 
-            print(err)
+            print(err, file=sys.stderr)
         else:
             ch.basic_ack(delivery_tag=method.delivery_tag) 
 
