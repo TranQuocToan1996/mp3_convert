@@ -7,7 +7,7 @@ from storage import util
 from bson.objectid import ObjectId
 
 server = Flask(__name__)
-server.config["MONGO_URI"] = "mongodb://host.minikube.internal:27017/videos"
+server.config["MONGO_URI"] = os.environ.get("MONGO_URI", "mongodb://mongo:27017/videos")
 
 mongo = PyMongo(server)
 
