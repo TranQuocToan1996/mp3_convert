@@ -23,10 +23,11 @@ def main():
     # rabbitmq connection
     rabbitServiceName = "rabbitmq"
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host=rabbitServiceName,
-                                  heartbeat=600,
-                                       blocked_connection_timeout=300)
-    )
+        pika.ConnectionParameters(
+            host=rabbitServiceName,
+            heartbeat=0,
+            blocked_connection_timeout=300
+            ))
     channel = connection.channel()
     channel.basic_consume(
         queue=os.environ.get("VIDEO_QUEUE", ""), 

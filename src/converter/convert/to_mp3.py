@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 import moviepy.editor
 
 def start(message, fs_videos, fs_mp3s, channel):
-    message = json.load(message)
+    message = json.loads(message)
     video_data = fs_videos.get(ObjectId(message["video_fid"]))
     tf = tempfile.NamedTemporaryFile()
     tf.write(video_data.read())
