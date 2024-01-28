@@ -13,13 +13,14 @@ mongo = PyMongo(server)
 
 fs = gridfs.GridFS(mongo.db)
 
-connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
 channel = connection.channel()
 
 @server.route("/login", methods = ["POST"])
 def login():
     token, err = access.login(request)
     if err:
+        server.logger.error(err)
         return err
     return token
 
@@ -27,6 +28,7 @@ def login():
 def upload():
     access, err = validate.token(request)
     if err:
+        server.logger.error(err)
         return err
     payload = json.loads(access)
     if not payload['admin']:
@@ -36,6 +38,7 @@ def upload():
     for _, f in request.files.items():
         err = util.upload(f, fs, channel, payload)
         if err:
+            server.logger.error(err)
             return err
     return "Upload success!", 200
 

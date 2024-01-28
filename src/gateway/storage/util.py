@@ -1,11 +1,11 @@
-import pika, json
+import pika, json, sys
 
 def upload(f, fs, channel, payload):
     # upload f to mongo
     try:
         fid = fs.put(f)
     except:
-        print("upload file to mongo fail: ", f.name)
+        print("upload file to mongo fail: ", f.name, file=sys.stderr)
         return "internal server error", 500
 
     # if upload ok, push message to rabbitmq
@@ -24,7 +24,7 @@ def upload(f, fs, channel, payload):
             ),
         )
     except Exception as err:
-        print("send upload message to Rabbitmq fail: ", err)
+        print("send message fail: ", err, file=sys.stderr)
         fs.delete(fid)
         return "internal server error", 500
 

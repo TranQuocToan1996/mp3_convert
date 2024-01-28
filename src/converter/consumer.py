@@ -32,14 +32,14 @@ def main():
     )
 
     channel.start_consuming()
-    print("Waiting for messages. To exit press CTRL+C")
+    print("Waiting for messages. To exit press CTRL+C", file=sys.stderr)
 
 # gracefully shutdown
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("Interrupted")
+        print("Interrupted",file=sys.stderr)
         try:
             sys.exit(0)
         except SystemExit:
